@@ -5,6 +5,8 @@
  */
 package ma.zs.generator.business.service;
 
+import java.io.File;
+
 /**
  *
  * @author El Massafi
@@ -21,7 +23,7 @@ public class ServiceConfig {
     private static final String deleteByPrefix = "deleteBy";
 
     private static final String packageName = "domain.model.service";
-    private static final String packagePath = "domain\\model\\service";
+    private static final String packagePath = "domain"+File.separator+"model"+File.separator+"service";
 
     public static String getPackageName() {
         return packageName;

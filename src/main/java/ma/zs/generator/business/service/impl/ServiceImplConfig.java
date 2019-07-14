@@ -5,6 +5,9 @@
  */
 package ma.zs.generator.business.service.impl;
 
+import java.io.File;
+
+
 /**
  *
  * @author Anas
@@ -13,14 +16,14 @@ public class ServiceImplConfig {
 
     private static final String serviceImplSuffix = "ServiceImpl";
     private static final String packageName = "domain.model.service.impl";
-    private static final String packagePath = "domain\\model\\service\\impl";
-
+    private static final String packagePath = "domain"+File.separator+"model"+File.separator+"service"+File.separator+"impl";
+    
     private static final String serviceSuffix = "Service";
     private static final String servicePackage = "domain.model.service";
-
+    private static final String editMethodeName = "edit";
     private static final String daoSuffix = "Dao";
     private static final String daoPackage = "domain.model.dao";
-
+    private static final String ejb = "\n @EJB \n";
     private static final String autowired = "\n @Autowired \n";
     private static final String override = "\n @Override \n";
     private static final String serviceAnnotation = "\n @Service  \n";
@@ -37,6 +40,7 @@ public class ServiceImplConfig {
     public static String getSaveMethodeName() {
         return saveMethodeName;
     }
+    
 
     public static String getUpdateMethodeName() {
         return updateMethodeName;
@@ -49,6 +53,15 @@ public class ServiceImplConfig {
     public static String getDeleteByPrefix() {
         return deleteByPrefix;
     }
+
+    public static String getEjb() {
+        return ejb;
+    }
+
+    public static String getEditMethodeName() {
+        return editMethodeName;
+    }
+    
 
     public static String getFindByCriteriaMethodeName() {
         return findByCriteriaMethodeName;
