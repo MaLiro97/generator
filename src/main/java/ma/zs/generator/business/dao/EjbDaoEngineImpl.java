@@ -153,7 +153,7 @@ public class EjbDaoEngineImpl implements DaoEngine {
         String className = pojo.getPojoName();
 
         String resultat = "public " + className + " findById(" + pojo.getIdType() + " " + pojo.getIdName() + "){\n"
-                + " return " + "em.find(" + pojo.getIdName() + ");\n"
+                + " return " + "em.find("+className+".class," + pojo.getIdName() + ");\n"
                 + "}\n";
         return resultat;
 
