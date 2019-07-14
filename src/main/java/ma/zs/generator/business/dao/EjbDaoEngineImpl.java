@@ -136,8 +136,11 @@ public class EjbDaoEngineImpl implements DaoEngine {
     public String generateFindAll(Pojo pojo) {
 
         String className = constructClassName(pojo);
-        return "public List< " + className + ">  " + ServiceImplConfig.getFindByAllMethodePrefix() + "(" + ")" + "{\n" + " return "
-                + "em.findAll();\n" + "}\n";
+        String beanAbrev = className.substring(0, 1).toLowerCase();
+        return "public List< " + className + ">  " + ServiceImplConfig.getFindByAllMethodePrefix() + "(" + ")" + "{\n" 
+                
+                + " return em.createQuery(\"SELECT "+beanAbrev+" FROM "+ className +" "+beanAbrev+"\").getResultList();" 
+                + "}\n";
 
     }
 
@@ -187,7 +190,7 @@ public class EjbDaoEngineImpl implements DaoEngine {
         return " @Override \n "
                 + "public List< " + className + ">  " + ServiceImplConfig.getFindByCriteriaMethodeName() + "(" + generateParams(pojo) + ")"
                 + "{\n"
-                + " return entityManager.createQuery(constructQuery(" + generateValues(pojo) + ")).getResultList(); \n "
+                + " return em.createQuery(constructQuery(" + generateValues(pojo) + ")).getResultList(); \n "
                 + "}\n";
     }
 
