@@ -5,6 +5,7 @@
  */
 package ma.zs.generator.business.dao;
 
+import java.io.File;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,9 +18,17 @@ public class DaoEngineConfig {
     private String importHader = "import org.springframework.data.jpa.repository.JpaRepository;\n"
             + "import org.springframework.stereotype.Repository;\n\n\n";
 
-    private String packagePath = "domain\\model\\dao";
+    private String packagePath = "domain"+File.separator+"model"+File.separator+"dao";
     private String packageName = "domain.model.dao";
     private String suffix = "Dao";
+    private static final String persistenceContext = "@PersistenceContext(unitName=\"";
+    private static final String persistenceName = "persistence";
+    
+    
+    
+    public static String getPersistenceContext() {
+        return persistenceContext+persistenceName+"\");";
+    }
 
     public String getImportHader() {
         return importHader;
