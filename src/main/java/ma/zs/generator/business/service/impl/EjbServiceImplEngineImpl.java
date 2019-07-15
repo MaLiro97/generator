@@ -46,6 +46,17 @@ public class EjbServiceImplEngineImpl implements ServiceImplEngine {
                 + "import java.util.Date; \n"
                 + "import javax.ejb.Stateless;\n"
                 + "import java.util.List; \n";
+        
+        for (Field declaredField : pojo.getFieldsGeneric()) {
+            resultat += "import " + ProjetBusinessConfig.getProjectPackageBase() + ".bean." + declaredField.getType().getSimpleName() + "; \n";
+            resultat += "import " + ProjetBusinessConfig.getProjectPackageBase() + "." + ServiceImplConfig.getDaoPackage() + "." + declaredField.getType().getSimpleName() + ServiceImplConfig.getDaoSuffix() + " " + "; \n";
+
+        }
+        for (PojoItem pojoItem : pojo.getFieldsListGenric()) {
+            String typeName = pojoItem.getPojoItemType();
+            resultat += "import " + ProjetBusinessConfig.getProjectPackageBase() + "." + ServiceImplConfig.getDaoPackage() + "." + typeName + ServiceImplConfig.getDaoSuffix() + " " + "; \n";
+            resultat += "import " + ProjetBusinessConfig.getProjectPackageBase() + ".bean." + typeName + " " + "; \n";
+        }
 
         return resultat;
     }
@@ -80,7 +91,23 @@ public class EjbServiceImplEngineImpl implements ServiceImplEngine {
         String className = pojo.getPojoName();
         String resultat
                 = ServiceImplConfig.getEjb()
-                + "\n private " + className + ServiceImplConfig.getDaoSuffix() + " " + className.toLowerCase() + ServiceImplConfig.getDaoSuffix() + ";\n";
+                + "private " + className + ServiceImplConfig.getDaoSuffix() + " " + className.toLowerCase() + ServiceImplConfig.getDaoSuffix() + ";\n"
+                
+                +"\n";
+        
+        
+         for (PojoItem pojoItem : pojo.getFieldsListGenric()) {
+            String typeName = pojoItem.getPojoItemType();
+            resultat += ServiceImplConfig.getEjb() 
+                    + " private " + typeName + ServiceImplConfig.getDaoSuffix() + " " + typeName.toLowerCase() +ServiceImplConfig.getDaoSuffix()+ "; \n";
+
+        }
+        for (Field field : pojo.getFieldsGeneric()) {
+            String typeName = field.getType().getSimpleName();
+            resultat += ServiceImplConfig.getEjb() 
+                    + " private " + typeName + ServiceImplConfig.getDaoSuffix() + " " + typeName.toLowerCase() +ServiceImplConfig.getDaoSuffix() +"; \n";
+
+        }
               
         return resultat;
     }
@@ -132,7 +159,7 @@ public class EjbServiceImplEngineImpl implements ServiceImplEngine {
                 resultat += typeName.toLowerCase() + ".set" + StringFormatterUtil.upperCaseTheFirstLetter(f.getName()) + "(" + classNameLowerCase + ");\n "
                         + "";
             }
-            resultat += typeName.toLowerCase() + ServiceImplConfig.getServiceSuffix() + "." + ServiceImplConfig.getSaveMethodeName() + "(  " + typeName.toLowerCase() + ");          \n";
+            resultat += typeName.toLowerCase() + ServiceImplConfig.getDaoSuffix() + "." + ServiceImplConfig.getSaveMethodeName() + "(  " + typeName.toLowerCase() + ");          \n";
             resultat += "            }\n";
             resultat += "            }\n";
             resultat += "" + "" + classNameLowerCase
